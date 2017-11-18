@@ -47,11 +47,12 @@ namespace ListaZakupów.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Produkt,Ilosc,Cena,Czas")] LzDBTest lzDBTest)
+        public ActionResult Create( LzDBTest lzDBTest)
         {
             if (ModelState.IsValid)
             {
                 lzDBTest.Czas = DateTime.Now;
+                lzDBTest.CzasModyfikacji = DateTime.Now;
                 db.LzDBTest.Add(lzDBTest);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -80,10 +81,11 @@ namespace ListaZakupów.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Produkt,Ilosc,Cena,Czas")] LzDBTest lzDBTest)
+        public ActionResult Edit( LzDBTest lzDBTest)
         {
             if (ModelState.IsValid)
             {
+                lzDBTest.CzasModyfikacji = DateTime.Now;
                 db.Entry(lzDBTest).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

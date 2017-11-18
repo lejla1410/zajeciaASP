@@ -161,6 +161,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711181221210_InitialCreate.cs" />
+    <Compile Include="Migrations\201711181221210_InitialCreate.Designer.cs">
+      <DependentUpon>201711181221210_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181256415_NazwaMigracji.cs" />
+    <Compile Include="Migrations\201711181256415_NazwaMigracji.Designer.cs">
+      <DependentUpon>201711181256415_NazwaMigracji.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181315310_CzasMod.cs" />
+    <Compile Include="Migrations\201711181315310_CzasMod.Designer.cs">
+      <DependentUpon>201711181315310_CzasMod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181331048_mod.cs" />
+    <Compile Include="Migrations\201711181331048_mod.Designer.cs">
+      <DependentUpon>201711181331048_mod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181343457_hssj.cs" />
+    <Compile Include="Migrations\201711181343457_hssj.Designer.cs">
+      <DependentUpon>201711181343457_hssj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\LzDBTest.cs" />
     <Compile Include="Models\LzContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -221,6 +242,23 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711181221210_InitialCreate.resx">
+      <DependentUpon>201711181221210_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181256415_NazwaMigracji.resx">
+      <DependentUpon>201711181256415_NazwaMigracji.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181315310_CzasMod.resx">
+      <DependentUpon>201711181315310_CzasMod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181331048_mod.resx">
+      <DependentUpon>201711181331048_mod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181343457_hssj.resx">
+      <DependentUpon>201711181343457_hssj.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

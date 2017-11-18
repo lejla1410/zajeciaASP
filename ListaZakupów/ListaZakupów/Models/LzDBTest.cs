@@ -12,5 +12,7 @@ namespace ListaZakupów.Models
         public int Ilosc { get; set; }
         public double Cena { get; set; }
         public DateTime Czas { get; set; }
+        public DateTime? CzasModyfikacji { get; set; }
+
     }
 }
