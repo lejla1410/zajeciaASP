@@ -16,7 +16,6 @@ namespace FormEmail.Repository
         {
             using (var context = new ApplicationContext())
             {
-
                 context.Set<T>().Add(entity);
                 context.SaveChanges();
             }
@@ -30,7 +29,7 @@ namespace FormEmail.Repository
                 context.SaveChanges();
             }
         }
-        // getwhere+ expression to lambda
+        // getwhere + expression to lambda
         public virtual List<T> GetWhere(Expression<Func<T, bool>> expression)
         {
 
