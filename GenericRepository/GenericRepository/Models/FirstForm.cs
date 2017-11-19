@@ -12,4 +12,6 @@ namespace GenericRepository.Models
         public double Cena { get; set; }
         public int Ilosc  { get; set; }
     }
+
+    //Dbset<>
 }
