@@ -94,6 +94,7 @@ namespace FormEmail.Controllers
         // POST: ContactForms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        // tutaj potwierdzamy usunęcie wiersza
         public ActionResult DeleteConfirmed(int id)
         {
             ContactForm contactForm = _contactRepository.GetWhere(x => x.Id == id).FirstOrDefault();
