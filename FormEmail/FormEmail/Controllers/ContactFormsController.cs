@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using FormEmail.Models;
 using FormEmail.Service;
+using FormEmail.Repository;
 
 namespace FormEmail.Controllers
 {
@@ -15,16 +16,20 @@ namespace FormEmail.Controllers
     {
 
         private EmailService _emailService;
+        private ContactFormRepository _contactRepository;
+
         public ContactFormsController()
         {
             _emailService = new EmailService();
+            _contactRepository = new ContactFormRepository();
+
         }
-        private ApplicationContext db = new ApplicationContext();
+       
 
         // GET: ContactForms
         public ActionResult Index()
         {
-            return View(db.ContactForm.ToList());
+            return View(_contactRepository.GetWhere(x=> x.Id>0));
         }
 
         // GET: ContactForms/Details/5
@@ -34,7 +39,8 @@ namespace FormEmail.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContactForm contactForm = db.ContactForm.Find(id);
+            //lambda
+            ContactForm contactForm = _contactRepository.GetWhere(x => x.Id == id.Value).FirstOrDefault();
             if (contactForm == null)
             {
                 return HttpNotFound();
@@ -57,8 +63,7 @@ namespace FormEmail.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.ContactForm.Add(contactForm);
-                db.SaveChanges();
+                _contactRepository.Create(contactForm); 
                 var message= _emailService.SendMessage(contactForm);
                 _emailService.SendEmail(message);
 
@@ -77,7 +82,8 @@ namespace FormEmail.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContactForm contactForm = db.ContactForm.Find(id);
+            // Value dodaliśmy bo jest int? (nullable)
+            ContactForm contactForm = _contactRepository.GetWhere(x => x.Id == id.Value).FirstOrDefault();
             if (contactForm == null)
             {
                 return HttpNotFound();
@@ -90,9 +96,8 @@ namespace FormEmail.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ContactForm contactForm = db.ContactForm.Find(id);
-            db.ContactForm.Remove(contactForm);
-            db.SaveChanges();
+            ContactForm contactForm = _contactRepository.GetWhere(x => x.Id == id).FirstOrDefault();
+            _contactRepository.Delete(contactForm);
             return RedirectToAction("Index");
         }
 

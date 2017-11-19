@@ -12,7 +12,7 @@ namespace FormEmail.Service
     {
 
         private SmtpClient _stmpClient;
-
+        // Poniższa metoda ustawia adres z którego wysyłamy maila.
         public EmailService()
         {
             _stmpClient = new SmtpClient
