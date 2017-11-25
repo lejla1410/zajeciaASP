@@ -6,10 +6,16 @@ using System.Web;
 
 namespace ProjektTest.Models
 {
-    public class Auto 
+    public class Auto : IBasicEntity
     {
         public int Id { get; set; }
-        public string Marka { get; set; }
-        public int NrRejestracyjny { get; set; }
+        public DateTime DateCreate { get; set; }
+        public DateTime DateMod { get; set; }
+        public bool IsActive{ get; set; }
+        public string Brand { get; set; }
+        public string Model { get; set; }
+        public string ModPerson { get; set; }
+        public string RegistrationNumber { get; set; }
+
     }
 }

@@ -24,7 +24,7 @@ namespace ProjektTest.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
+        public DbSet<Auto> AutoDB { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
