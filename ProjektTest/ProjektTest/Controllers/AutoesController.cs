@@ -9,22 +9,35 @@ using System.Web.Mvc;
 using ProjektTest.Models;
 using ProjektTest.Repository.Interfaces;
 using ProjektTest.BusinessLogic.Interfaces;
+using ProjektTest.ViewModels;
 
 namespace ProjektTest.Controllers
 {
     public class AutoesController : Controller
     {
 
-        private IRepoFirst _carsRepository;
+        private IRepoFirst _repoFirst;
         private IAutoBusinessLogic _autoBusinessLogic;
-        public AutoesController(IRepoFirst carsRepository)
+        public AutoesController(IRepoFirst repoFirst, IAutoBusinessLogic autoBusinessLogic)
         {
-            _carsRepository = carsRepository;
+            _repoFirst = repoFirst;
+            _autoBusinessLogic = autoBusinessLogic;
         }
         // GET: CarEntities
         public ActionResult Index()
         {
-            return View(_carsRepository.GetWhere(x => x.Id > 0));
+            var autoVM = new VMAuto { AutoList = new List<Auto>() };
+            autoVM.ShowIfAuth = _autoBusinessLogic.CheckIfUserIsAutorize();
+            if (autoVM.ShowIfAuth)
+            {
+                autoVM = _repoFirst.GetWhere(x => x.Id > 0);
+            }
+            else
+            {
+                autoVM = _repoFirst.GetWhere(x => x.Id > 0 && x.IsActive);
+            }
+
+            return View(autoVM);
         }
 
         // GET: CarEntities/Details/5
@@ -34,7 +47,7 @@ namespace ProjektTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Auto carEntity = _carsRepository.GetWhere(x => x.Id == id.Value).FirstOrDefault();
+            Auto carEntity = _repoFirst.GetWhere(x => x.Id == id.Value).FirstOrDefault();
             if (carEntity == null)
             {
                 return HttpNotFound();
@@ -58,7 +71,7 @@ namespace ProjektTest.Controllers
             if (ModelState.IsValid)
             {
                 carEntity.ModPerson = _autoBusinessLogic.CheckIfUserIsAuthAndReturnName();
-                _carsRepository.Create(carEntity);
+                _repoFirst.Create(carEntity);
                 return RedirectToAction("Index");
             }
 
@@ -72,7 +85,7 @@ namespace ProjektTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Auto carEntity = _carsRepository.GetWhere(x => x.Id == id.Value).FirstOrDefault();
+            Auto carEntity = _repoFirst.GetWhere(x => x.Id == id.Value).FirstOrDefault();
             if (carEntity == null)
             {
                 return HttpNotFound();
@@ -89,7 +102,7 @@ namespace ProjektTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                _carsRepository.Update(carEntity);
+                _repoFirst.Update(carEntity);
                 return RedirectToAction("Index");
             }
             return View(carEntity);
@@ -102,7 +115,7 @@ namespace ProjektTest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Auto carEntity = _carsRepository.GetWhere(x => x.Id == id.Value).FirstOrDefault();
+            Auto carEntity = _repoFirst.GetWhere(x => x.Id == id.Value).FirstOrDefault();
             if (carEntity == null)
             {
                 return HttpNotFound();
@@ -115,8 +128,8 @@ namespace ProjektTest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Auto carEntity = _carsRepository.GetWhere(x => x.Id == id).FirstOrDefault();
-            _carsRepository.Delete(carEntity);
+            Auto carEntity = _repoFirst.GetWhere(x => x.Id == id).FirstOrDefault();
+            _repoFirst.Delete(carEntity);
             return RedirectToAction("Index");
         }
 

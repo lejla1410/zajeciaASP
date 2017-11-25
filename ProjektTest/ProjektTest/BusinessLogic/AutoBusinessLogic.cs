@@ -11,9 +11,13 @@ namespace ProjektTest.BusinessLogic
         public string CheckIfUserIsAuthAndReturnName()
         {
             string name = "Niezalogowany";
-            if (HttpContext.Current.User.Identity.IsAuthenticated)
+            if (CheckIfUserIsAutorize())
                 name = HttpContext.Current.User.Identity.Name;
             return name;
+        }
+        public bool CheckIfUserIsAutorize()
+        {
+            return HttpContext.Current.User.Identity.IsAuthenticated;
         }
     }
 }

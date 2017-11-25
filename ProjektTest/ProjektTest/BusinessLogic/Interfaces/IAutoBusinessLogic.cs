@@ -9,5 +9,6 @@ namespace ProjektTest.BusinessLogic.Interfaces
    public interface IAutoBusinessLogic
     {
         string CheckIfUserIsAuthAndReturnName();
+        bool CheckIfUserIsAutorize();
     }
 }

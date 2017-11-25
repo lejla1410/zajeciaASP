@@ -234,6 +234,7 @@
     <Compile Include="Repository\RepoAbstract.cs" />
     <Compile Include="Repository\RepoFirst.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\VMAuto.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
