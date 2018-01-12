@@ -12,22 +12,31 @@ namespace ListaZakupów.Controllers
 {
     public class LzDBTestsController : Controller
     {
-        private LzContext db = new LzContext();
+        //powstanie nowego elementu do bazy danych z LzContext 
+        private LzContext _db = new LzContext();
 
         // GET: LzDBTests
         public ActionResult Index()
         {
-            return View(db.LzDBTest.ToList());
+            // stworzenie z bazy danych listę
+            return View(_db.LzDBTest.ToList());
         }
 
         // GET: LzDBTests/Details/5
         public ActionResult Details(int? id)
         {
+            // jeśli ID jest nullem to zwróci: Równoważne stanu HTTP 400. BadRequest Wskazuje, 
+            //czy żądanie jest niezrozumiałe przez serwer. BadRequest jest wysyłany, gdy błąd nie ma zastosowanie,
+            //lub jeśli dokładny błąd jest nieznany lub nie ma swój własny kod błędu.
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LzDBTest lzDBTest = db.LzDBTest.Find(id);
+            // jeśli ID jest ok to baza go wyszukuje
+            LzDBTest lzDBTest = _db.LzDBTest.Find(id);
+
+            // jeśli baza nasza nie istnieje 
             if (lzDBTest == null)
             {
                 return HttpNotFound();
@@ -45,7 +54,9 @@ namespace ListaZakupów.Controllers
         // POST: LzDBTests/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+
+            // Atrybuty 
+        [HttpPost] 
         [ValidateAntiForgeryToken]
         public ActionResult Create( LzDBTest lzDBTest)
         {
@@ -53,8 +64,8 @@ namespace ListaZakupów.Controllers
             {
                 lzDBTest.Czas = DateTime.Now;
                 lzDBTest.CzasModyfikacji = DateTime.Now;
-                db.LzDBTest.Add(lzDBTest);
-                db.SaveChanges();
+                _db.LzDBTest.Add(lzDBTest);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -68,7 +79,7 @@ namespace ListaZakupów.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LzDBTest lzDBTest = db.LzDBTest.Find(id);
+            LzDBTest lzDBTest = _db.LzDBTest.Find(id);
             if (lzDBTest == null)
             {
                 return HttpNotFound();
@@ -86,8 +97,8 @@ namespace ListaZakupów.Controllers
             if (ModelState.IsValid)
             {
                 lzDBTest.CzasModyfikacji = DateTime.Now;
-                db.Entry(lzDBTest).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(lzDBTest).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(lzDBTest);
@@ -100,7 +111,7 @@ namespace ListaZakupów.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LzDBTest lzDBTest = db.LzDBTest.Find(id);
+            LzDBTest lzDBTest = _db.LzDBTest.Find(id);
             if (lzDBTest == null)
             {
                 return HttpNotFound();
@@ -113,9 +124,9 @@ namespace ListaZakupów.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            LzDBTest lzDBTest = db.LzDBTest.Find(id);
-            db.LzDBTest.Remove(lzDBTest);
-            db.SaveChanges();
+            LzDBTest lzDBTest = _db.LzDBTest.Find(id);
+            _db.LzDBTest.Remove(lzDBTest);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -123,7 +134,7 @@ namespace ListaZakupów.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

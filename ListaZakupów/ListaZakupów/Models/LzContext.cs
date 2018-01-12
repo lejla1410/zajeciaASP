@@ -6,6 +6,7 @@ using System.Web;
 
 namespace ListaZakupów.Models
 {
+    // dziedziczenie po DbContext z Entity Framework
     public class LzContext : DbContext
     {
 
@@ -13,6 +14,7 @@ namespace ListaZakupów.Models
         {
 
         }
+        //  Stworzenie listy pól? sprawdzić i poprawić
         public DbSet<LzDBTest> LzDBTest { get; set; }
 
     }
