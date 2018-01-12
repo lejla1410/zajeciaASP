@@ -13,16 +13,17 @@ namespace FormEmail.Service
 
         private SmtpClient _stmpClient;
         // Poniższa metoda ustawia adres z którego wysyłamy maila.
+        // Simple Mail Transfer Protocol
         public EmailService()
         {
             _stmpClient = new SmtpClient
             {
-                Host = "smtp.gmail.com",
+                Host = "smtp.gmail.com", // Pobiera lub ustawia nazwę lub adres IP hosta używany dla transakcji SMTP.
                 Port = 587,
-                EnableSsl = true,
+                EnableSsl = true, // Określa czy SmtpClient używa protokołu Secure Sockets Layer (SSL) do szyfrowania połączenia.
                 UseDefaultCredentials = true,
-                Credentials =
-                 new NetworkCredential("gym550182@gmail.com", "!QAZ2wsx#EDC")
+                Credentials = new NetworkCredential("gym550182@gmail.com", "!QAZ2wsx#EDC") // Inicjuje nowe wystąpienie NetworkCredential klasy przy użyciu określonej nazwy użytkownika i hasła.
+                // Pobiera lub ustawia poświadczenia używane do uwierzytelnienia nadawcy.
             };
 
         }
